@@ -16,7 +16,7 @@ import static specs.Spec.*;
 public class ApiTests {
 
 
-    private final static String GET_LIST_USER_URL = "api/users?page=",
+    private final static String GET_LIST_USER_URL = "/api/users?page=",
             USERS_OPERATIONS_URL = "/api/users/";
 
 
