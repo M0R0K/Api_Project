@@ -36,15 +36,13 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    testImplementation (
+    testImplementation(
             'org.junit.jupiter:junit-jupiter:5.10.1',
             "com.github.javafaker:javafaker:1.0.2",
-        //    'org.assertj:assertj-core:3.24.2',
             "io.rest-assured:rest-assured:$restAssuredVersion",
             "io.rest-assured:json-schema-validator:$restAssuredVersion",
             "io.qameta.allure:allure-rest-assured:$allureVersion"
     )
-  //  testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.8.1')
 }
 
 tasks.withType(Test) {

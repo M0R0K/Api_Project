@@ -13,19 +13,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static specs.Spec.*;
 
 
-public class ApiTests {
+public class ApiTests extends TestBase {
 
 
-    private final static String GET_LIST_USER_URL = "api/users?page=",
-            USERS_OPERATIONS_URL = "/api/users/";
+    private final static String GET_LIST_USER_URL = "/users?page=",
+            USERS_OPERATIONS_URL = "/users/";
 
 
     @Test
     @Tag("Api")
-    @DisplayName("Зачитка пользователей со второй страницы")
+    @DisplayName("Проверка пагинации")
     void getUsersSuccessTestSecondPage() {
         TestData data = new TestData();
-        GetUsersResponseModel response = step("Делаем запрос", () -> given()
+        GetUsersResponseModel response = step("Выполняем запрос на получение страницы", () -> given()
                 .spec(successfulRequest)
                 .when()
                 .get(GET_LIST_USER_URL + data.pageId)
@@ -36,7 +36,7 @@ public class ApiTests {
                 .as(GetUsersResponseModel.class));
         step("Проверяем page id", () ->
                 assertEquals(data.pageId, response.getPage()));
-        step("Проверяем количество элементов в запросе", () ->
+        step("Проверяем количество элементов на странице", () ->
                 assertEquals(data.numberOfDataPerPage, response.getData().length));
 
     }
@@ -50,7 +50,7 @@ public class ApiTests {
         UserBodyModel userBodyModel = new UserBodyModel();
         userBodyModel.setName(data.name);
         userBodyModel.setJob(data.job);
-        UserBodyModel response = step("Делаем запрос", () -> given()
+        UserBodyModel response = step("Делаем запрос на создание пользователя", () -> given()
                 .spec(successfulRequest)
                 .when()
                 .body(userBodyModel)
@@ -68,13 +68,13 @@ public class ApiTests {
 
     @Test
     @Tag("Api")
-    @DisplayName("Обновление пользователя через метод put")
+    @DisplayName("Обновление пользователя PUT")
     void updateUserSuccessTestPut() {
         TestData data = new TestData();
         UserBodyModel userBodyModel = new UserBodyModel();
         userBodyModel.setName(data.name);
         userBodyModel.setJob(data.job);
-        UserBodyModel response = step("Делаем запрос", () -> given()
+        UserBodyModel response = step("Выполняем запрос на обновление пользователя", () -> given()
                 .spec(successfulRequest)
                 .when()
                 .body(userBodyModel)
@@ -92,13 +92,13 @@ public class ApiTests {
 
     @Test
     @Tag("Api")
-    @DisplayName("Обновление пользователя через метод patch")
+    @DisplayName("Обновление пользователя PATCH")
     void updateUserSuccessTestPatch() {
         TestData data = new TestData();
         UserBodyModel userBodyModel = new UserBodyModel();
         userBodyModel.setName(data.name);
         userBodyModel.setJob(data.job);
-        UserBodyModel response = step("Делаем запрос", () -> given()
+        UserBodyModel response = step("Выполняем запрос на обновление пользователя", () -> given()
                 .spec(successfulRequest)
                 .when()
                 .body(userBodyModel)
@@ -122,15 +122,15 @@ public class ApiTests {
     void deleteUserSuccessTest() {
         TestData data = new TestData();
 
-        step("Делаем запрос", () ->
-            given()
-                    .spec(successfulRequest)
-                    .when()
-                    .delete(USERS_OPERATIONS_URL + data.userId)
-                    .then()
-                    .spec(successfulResponseNoContent)
-                    .extract()
-                    .response());
+        step("Выполняем запрос на удаление пользователя", () ->
+                given()
+                        .spec(successfulRequest)
+                        .when()
+                        .delete(USERS_OPERATIONS_URL + data.userId)
+                        .then()
+                        .spec(successfulResponseNoContent)
+                        .extract()
+                        .response());
     }
 
 }
