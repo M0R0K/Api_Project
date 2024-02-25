@@ -1,6 +1,6 @@
 # Проект по автоматизации тестирования API на базе сервиса [Regres.IN](https://reqres.in/)
 
-![regresin](reqres.jpg "Главная страница")
+![regresin](media/screenshots/reqres.jpg "Главная страница")
 
 <p>Сервис для тестирования API</p>
 
@@ -86,7 +86,7 @@ ____
 
 
 <p align="center">
-<img title="Allure Overview" src="allure1.jpg">
+<img title="Allure Overview" src="media/screenshots/allurereport.jpg">
 </p>
 
 ____
