@@ -10,7 +10,5 @@ public class TestData {
     public String name = faker.name().fullName();
     public String job = faker.job().field();
     public String userId = "2";
-    public String pageId = "2";
-    public int numberOfDataPerPage = 6;
 
 }

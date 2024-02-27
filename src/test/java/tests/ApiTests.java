@@ -4,7 +4,6 @@ import data.TestData;
 import models.UserBodyModel;
 import models.GetUsersResponseModel;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static io.qameta.allure.Allure.step;
@@ -21,37 +20,34 @@ public class ApiTests extends TestBase {
 
 
     @Test
-    @Tag("Api")
     @DisplayName("Проверка пагинации")
     void getUsersSuccessTestSecondPage() {
-        TestData data = new TestData();
-        GetUsersResponseModel response = step("Выполняем запрос на получение страницы", () -> given()
-                .spec(successfulRequest)
+        String pageId = "2";
+        int numberOfDataPerPage = 6;
+        GetUsersResponseModel response = step("Выполняем запрос на получение страницы", () -> given(successfulRequest)
                 .when()
-                .get(GET_LIST_USER_URL + data.pageId)
+                .get(GET_LIST_USER_URL + pageId)
                 .then()
                 .spec(successfulResponse)
                 .extract()
                 .response()
                 .as(GetUsersResponseModel.class));
         step("Проверяем page id", () ->
-                assertEquals(data.pageId, response.getPage()));
+                assertEquals(pageId, response.getPage()));
         step("Проверяем количество элементов на странице", () ->
-                assertEquals(data.numberOfDataPerPage, response.getData().length));
+                assertEquals(numberOfDataPerPage, response.getData().length));
 
     }
 
 
     @Test
-    @Tag("Api")
     @DisplayName("Создание пользователя")
     void createUserSuccessTest() {
         TestData data = new TestData();
         UserBodyModel userBodyModel = new UserBodyModel();
         userBodyModel.setName(data.name);
         userBodyModel.setJob(data.job);
-        UserBodyModel response = step("Делаем запрос на создание пользователя", () -> given()
-                .spec(successfulRequest)
+        UserBodyModel response = step("Делаем запрос на создание пользователя", () -> given(successfulRequest)
                 .when()
                 .body(userBodyModel)
                 .post(USERS_OPERATIONS_URL)
@@ -67,15 +63,14 @@ public class ApiTests extends TestBase {
     }
 
     @Test
-    @Tag("Api")
     @DisplayName("Обновление пользователя PUT")
     void updateUserSuccessTestPut() {
+
         TestData data = new TestData();
         UserBodyModel userBodyModel = new UserBodyModel();
         userBodyModel.setName(data.name);
         userBodyModel.setJob(data.job);
-        UserBodyModel response = step("Выполняем запрос на обновление пользователя", () -> given()
-                .spec(successfulRequest)
+        UserBodyModel response = step("Выполняем запрос на обновление пользователя", () -> given(successfulRequest)
                 .when()
                 .body(userBodyModel)
                 .put(USERS_OPERATIONS_URL + data.userId)
@@ -91,15 +86,13 @@ public class ApiTests extends TestBase {
     }
 
     @Test
-    @Tag("Api")
     @DisplayName("Обновление пользователя PATCH")
     void updateUserSuccessTestPatch() {
         TestData data = new TestData();
         UserBodyModel userBodyModel = new UserBodyModel();
         userBodyModel.setName(data.name);
         userBodyModel.setJob(data.job);
-        UserBodyModel response = step("Выполняем запрос на обновление пользователя", () -> given()
-                .spec(successfulRequest)
+        UserBodyModel response = step("Выполняем запрос на обновление пользователя", () -> given(successfulRequest)
                 .when()
                 .body(userBodyModel)
                 .patch(USERS_OPERATIONS_URL + data.userId)
@@ -117,14 +110,12 @@ public class ApiTests extends TestBase {
 
 
     @Test
-    @Tag("Api")
     @DisplayName("Успешное удаление пользователя")
     void deleteUserSuccessTest() {
         TestData data = new TestData();
 
         step("Выполняем запрос на удаление пользователя", () ->
-                given()
-                        .spec(successfulRequest)
+                given(successfulRequest)
                         .when()
                         .delete(USERS_OPERATIONS_URL + data.userId)
                         .then()
